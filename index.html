@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name Generator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo">Name Generator</h1>
+      <p class="subtitle">Generate unique male or female names effortlessly</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Card Section -->
+      <div class="card">
+        <!-- Gender Selection -->
+        <div class="gender-selection">
+          <button id="maleButton" class="gender-btn male active" onclick="selectGender('male')">Male</button>
+          <button id="femaleButton" class="gender-btn female" onclick="selectGender('female')">Female</button>
+        </div>
+
+        <!-- Generate Button -->
+        <button class="generate-btn" onclick="generateName()">Generate Name</button>
+
+        <!-- Output Section -->
+        <div class="output">
+          <h2>Generated Name</h2>
+          <p id="nameDisplay">Click the button to generate a name!</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Name Generator | Designed by Com Dot KKH Himel</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

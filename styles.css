@@ -1,0 +1,137 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f7fc;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Container */
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  margin-bottom: 20px;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #004aad;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Card */
+.card {
+  background-color: white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Gender Buttons */
+.gender-selection {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.gender-btn {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gender-btn.male {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.gender-btn.female {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.gender-btn.active.male {
+  background-color: #007bff;
+  color: white;
+}
+
+.gender-btn.active.female {
+  background-color: #ff4081;
+  color: white;
+}
+
+.gender-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Generate Button */
+.generate-btn {
+  background-color: #004aad;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.generate-btn:hover {
+  background-color: #003a8c;
+  transform: scale(1.08);
+}
+
+/* Output Section */
+.output {
+  margin-top: 20px;
+}
+
+.output h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#nameDisplay {
+  font-size: 1.2rem;
+  color: #555;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #888;
+}
