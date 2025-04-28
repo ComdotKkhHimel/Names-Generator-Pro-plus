@@ -1,0 +1,114 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap');
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: #f1f4f8;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 50px 40px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: 0.3s ease all;
+}
+
+.container:hover {
+  transform: scale(1.01);
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #2a2a2a;
+  margin-bottom: 25px;
+}
+
+.gender-select {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.gender-select label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #34495e;
+  display: flex;
+  align-items: center;
+}
+
+.gender-select input {
+  margin-right: 8px;
+  accent-color: #4a69bd;
+}
+
+button {
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background-color: #4a69bd;
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background-color: #3b57a3;
+  transform: translateY(-2px);
+}
+
+.output {
+  margin-top: 30px;
+  background-color: #eaf0f6;
+  border-radius: 16px;
+  padding: 18px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2a2a2a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#copyBtn {
+  background-color: #f0932b;
+  font-size: 14px;
+  padding: 10px 16px;
+  margin-left: 14px;
+  border-radius: 8px;
+}
+
+#copyBtn:hover {
+  background-color: #d87b1f;
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 40px 20px;
+  }
+
+  .gender-select {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .output {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+  }
+}
