@@ -3,38 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Name Generator</title>
+    <meta name="description" content="Generate random full names with a colorful interface.">
+    <title>Random Names Generator - KKH</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e6fffa, #fefcbf, #fed7e2, #e9d8fd);
+            color: #2d3748;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #5a67d8;
+            color: #ffffff;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 3px solid transparent;
+            background: linear-gradient(#ffffff, #ffffff) padding-box, 
+                        linear-gradient(45deg, #38b2ac, #f56565, #ecc94b, #5a67d8) border-box;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        button.male {
+            background: #38b2ac;
+            color: #ffffff;
+        }
+
+        button.female {
+            background: #f56565;
+            color: #ffffff;
+        }
+
+        button.copy {
+            background: #805ad5;
+            color: #ffffff;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-container {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #result {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2d3748;
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            flex-grow: 1;
+            border: 2px solid #38b2ac;
+        }
+
+        #result.fade {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        #result.show {
+            opacity: 1;
+            transform: translateY(0);
+            box-shadow: 0 0 10px rgba(56, 178, 172, 0.5);
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -2.5rem;
+            background: #2d3748;
+            color: #ffffff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        #error {
+            color: #e53e3e;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            min-height: 1.5rem;
+            background: #fff5f5;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        footer {
+            background: #5a67d8;
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+-Regular Response (continued)-
+
+            .card h2 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                padding: 0.6rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            button.copy {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+                margin-left: 0.5rem;
+            }
+
+            #result {
+                font-size: 1.6rem;
+            }
+
+            .result-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
 </head>
-<body style="margin: 0; font-family: 'Roboto', Arial, sans-serif; background-color: #f4f7fa; color: #333; line-height: 1.6;">
+<body>
     <!-- Header -->
-    <header style="background-color: #1a2a44; color: white; padding: 20px 0; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <h1 style="margin: 0; font-size: 2.5em; font-weight: 700;">Random Name Generator</h1>
+    <header>
+        <h1>Random Names Generator - KKH</h1>
+        <p></p>
     </header>
 
     <!-- Main Content -->
-    <main style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 140px); padding: 20px;">
-        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 600px; width: 100%; text-align: center;">
-            <h2 style="font-size: 1.8em; margin: 0 0 20px; color: #1a2a44;">Show Names</h2>
-            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <button onclick="showNames('male')" style="padding: 12px 24px; font-size: 1.1em; font-weight: 500; border: none; border-radius: 8px; background-color: #007bff; color: white; cursor: pointer; transition: transform 0.2s, background-color 0.2s;">Male Names</button>
-                <button onclick="showNames('female')" style="padding: 12px 24px; font-size: 1.1em; font-weight: 500; border: none; border-radius: 8px; background-color: #ff6f61; color: white; cursor: pointer; transition: transform 0.2s, background-color 0.2s;">Female Names</button>
+    <main>
+        <div class="card">
+            <h2>Generate a Full Name</h2>
+            <div class="button-container">
+                <button class="male" onclick="showName('male')">Male Name</button>
+                <button class="female" onclick="showName('female')">Female Name</button>
             </div>
-            <div id="result" style="margin-top: 25px; font-size: 1.2em; color: #1a2a44; max-height: 300px; overflow-y: auto; text-align: left; padding: 10px; border: 1px solid #ddd; border-radius: 8px; transition: opacity 0.3s;">
-                Click a button to show names!
+            <div class="result-container">
+                <div id="result">Click a button to generate a name!</div>
+                <button id="copyButton" class="copy" onclick="copyName()" disabled aria-label="Copy full name to clipboard">Copy</button>
+                <span id="tooltip" class="tooltip">Copied!</span>
             </div>
-            <div id="error" style="color: #d32f2f; font-size: 0.9em; margin-top: 10px; min-height: 20px;"></div>
+            <div id="error"></div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer style="background-color: #1a2a44; color: white; text-align: center; padding: 15px 0; font-size: 0.9em;">
-        <p style="margin: 0;">© 2025</p>
+    <footer>
+        <p>Com Dot KKH - Himel</p>
     </footer>
 
     <script>
         // Arrays to store names
         let maleFirstNames = [];
         let femaleFirstNames = [];
+        let lastNames = [];
 
         // Function to fetch and parse text file
         async function loadNames(file) {
@@ -57,40 +292,59 @@
         async function initialize() {
             maleFirstNames = await loadNames('male_names.txt');
             femaleFirstNames = await loadNames('female_names.txt');
+            lastNames = await loadNames('last_names.txt');
 
-            if (maleFirstNames.length === 0 || femaleFirstNames.length === 0) {
+            if (maleFirstNames.length === 0 || femaleFirstNames.length === 0 || lastNames.length === 0) {
                 document.getElementById('error').innerText = 'One or more name files are empty or failed to load.';
             } else {
                 console.log('All files loaded successfully.');
             }
         }
 
-        // Show names from the selected file
-        function showNames(gender) {
-            const names = gender === 'male' ? maleFirstNames : femaleFirstNames;
+        // Show a random full name
+        function showName(gender) {
+            const firstNames = gender === 'male' ? maleFirstNames : femaleFirstNames;
             const resultDiv = document.getElementById('result');
-            if (names.length === 0) {
+            const copyButton = document.getElementById('copyButton');
+            if (firstNames.length === 0 || lastNames.length === 0) {
                 resultDiv.innerText = 'No names available.';
+                copyButton.disabled = true;
                 return;
             }
-            resultDiv.style.opacity = 0;
+            const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            const fullName = `${randomFirstName} ${randomLastName}`;
+            resultDiv.classList.remove('show');
+            resultDiv.classList.add('fade');
             setTimeout(() => {
-                resultDiv.innerHTML = '<ul style="list-style: none; padding: 0; margin: 0;">' +
-                    names.map(name => `<li style="padding: 5px 0;">${name}</li>`).join('') +
-                    '</ul>';
-                resultDiv.style.opacity = 1;
+                resultDiv.innerText = fullName;
+                resultDiv.classList.remove('fade');
+                resultDiv.classList.add('show');
+                copyButton.disabled = false;
             }, 300);
             document.getElementById('error').innerText = '';
         }
 
+        // Copy name to clipboard
+        function copyName() {
+            const resultDiv = document.getElementById('result');
+            const text = resultDiv.innerText;
+            if (text && text !== 'Click a button to generate a name!' && text !== 'No names available.') {
+                navigator.clipboard.writeText(text).then(() => {
+                    const tooltip = document.getElementById('tooltip');
+                    tooltip.classList.add('show');
+                    setTimeout(() => {
+                        tooltip.classList.remove('show');
+                    }, 1500);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    document.getElementById('error').innerText = 'Failed to copy name.';
+                });
+            }
+        }
+
         // Initialize name loading
         initialize();
-
-        // Add hover effects for buttons
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('mouseover', () => button.style.transform = 'scale(1.05)');
-            button.addEventListener('mouseout', () => button.style.transform = 'scale(1)');
-        });
     </script>
 </body>
 </html>
