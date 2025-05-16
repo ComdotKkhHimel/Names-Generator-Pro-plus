@@ -3,39 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Name Lists</title>
+    <title>Random Name Generator</title>
 </head>
 <body style="margin: 0; font-family: 'Roboto', Arial, sans-serif; background-color: #f4f7fa; color: #333; line-height: 1.6;">
     <!-- Header -->
     <header style="background-color: #1a2a44; color: white; padding: 20px 0; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <h1 style="margin: 0; font-size: 2.5em; font-weight: 700;">Name Lists</h1>
+        <h1 style="margin: 0; font-size: 2.5em; font-weight: 700;">Random Name Generator</h1>
     </header>
 
     <!-- Main Content -->
     <main style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 140px); padding: 20px;">
-        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 800px; width: 100%; text-align: center;">
-            <h2 style="font-size: 1.8em; margin: 0 0 20px; color: #1a2a44;">Name Database</h2>
-            
-            <!-- Male Names -->
-            <div style="margin-bottom: 30px;">
-                <h3 style="font-size: 1.4em; color: #1a2a44; margin: 0 0 10px;">Male First Names</h3>
-                <div id="maleNames" style="max-height: 200px; overflow-y: auto; text-align: left; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em;"></div>
-                <div id="maleError" style="color: #d32f2f; font-size: 0.9em; margin-top: 5px;"></div>
+        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 600px; width: 100%; text-align: center;">
+            <h2 style="font-size: 1.8em; margin: 0 0 20px; color: #1a2a44;">Show Names</h2>
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <button onclick="showNames('male')" style="padding: 12px 24px; font-size: 1.1em; font-weight: 500; border: none; border-radius: 8px; background-color: #007bff; color: white; cursor: pointer; transition: transform 0.2s, background-color 0.2s;">Male Names</button>
+                <button onclick="showNames('female')" style="padding: 12px 24px; font-size: 1.1em; font-weight: 500; border: none; border-radius: 8px; background-color: #ff6f61; color: white; cursor: pointer; transition: transform 0.2s, background-color 0.2s;">Female Names</button>
             </div>
-
-            <!-- Female Names -->
-            <div style="margin-bottom: 30px;">
-                <h3 style="font-size: 1.4em; color: #1a2a44; margin: 0 0 10px;">Female First Names</h3>
-                <div id="femaleNames" style="max-height: 200px; overflow-y: auto; text-align: left; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em;"></div>
-                <div id="femaleError" style="color: #d32f2f; font-size: 0.9em; margin-top: 5px;"></div>
+            <div id="result" style="margin-top: 25px; font-size: 1.2em; color: #1a2a44; max-height: 300px; overflow-y: auto; text-align: left; padding: 10px; border: 1px solid #ddd; border-radius: 8px; transition: opacity 0.3s;">
+                Click a button to show names!
             </div>
-
-            <!-- Last Names -->
-            <div>
-                <h3 style="font-size: 1.4em; color: #1a2a44; margin: 0 0 10px;">Last Names</h3>
-                <div id="lastNames" style="max-height: 200px; overflow-y: auto; text-align: left; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em;"></div>
-                <div id="lastError" style="color: #d32f2f; font-size: 0.9em; margin-top: 5px;"></div>
-            </div>
+            <div id="error" style="color: #d32f2f; font-size: 0.9em; margin-top: 10px; min-height: 20px;"></div>
         </div>
     </main>
 
@@ -45,8 +32,12 @@
     </footer>
 
     <script>
-        // Function to fetch and display names
-        async function loadNames(file, elementId, errorId) {
+        // Arrays to store names
+        let maleFirstNames = [];
+        let femaleFirstNames = [];
+
+        // Function to fetch and parse text file
+        async function loadNames(file) {
             try {
                 console.log(`Loading file: ${file}`);
                 const response = await fetch(file);
@@ -54,40 +45,52 @@
                 const text = await response.text();
                 const names = text.split('\n').map(name => name.trim()).filter(name => name);
                 console.log(`Loaded ${names.length} names from ${file}`);
-                
-                if (names.length === 0) {
-                    document.getElementById(errorId).innerText = `File ${file} is empty.`;
-                    return;
-                }
-
-                const nameList = document.createElement('ul');
-                nameList.style.listStyle = 'none';
-                nameList.style.padding = '0';
-                names.forEach(name => {
-                    const li = document.createElement('li');
-                    li.innerText = name;
-                    li.style.padding = '5px 0';
-                    nameList.appendChild(li);
-                });
-                document.getElementById(elementId).appendChild(nameList);
+                return names;
             } catch (error) {
                 console.error(`Error loading ${file}:`, error);
-                document.getElementById(errorId).innerText = `Error: ${error.message}`;
+                document.getElementById('error').innerText = `Error: ${error.message}`;
+                return [];
             }
         }
 
-        // Load all name files on page load
+        // Load name files on page load
         async function initialize() {
-            await Promise.all([
-                loadNames('male_names.txt', 'maleNames', 'maleError'),
-                loadNames('female_names.txt', 'femaleNames', 'femaleError'),
-                loadNames('last_names.txt', 'lastNames', 'lastError')
-            ]);
-            console.log('All files processed.');
+            maleFirstNames = await loadNames('male_names.txt');
+            femaleFirstNames = await loadNames('female_names.txt');
+
+            if (maleFirstNames.length === 0 || femaleFirstNames.length === 0) {
+                document.getElementById('error').innerText = 'One or more name files are empty or failed to load.';
+            } else {
+                console.log('All files loaded successfully.');
+            }
+        }
+
+        // Show names from the selected file
+        function showNames(gender) {
+            const names = gender === 'male' ? maleFirstNames : femaleFirstNames;
+            const resultDiv = document.getElementById('result');
+            if (names.length === 0) {
+                resultDiv.innerText = 'No names available.';
+                return;
+            }
+            resultDiv.style.opacity = 0;
+            setTimeout(() => {
+                resultDiv.innerHTML = '<ul style="list-style: none; padding: 0; margin: 0;">' +
+                    names.map(name => `<li style="padding: 5px 0;">${name}</li>`).join('') +
+                    '</ul>';
+                resultDiv.style.opacity = 1;
+            }, 300);
+            document.getElementById('error').innerText = '';
         }
 
         // Initialize name loading
         initialize();
+
+        // Add hover effects for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mouseover', () => button.style.transform = 'scale(1.05)');
+            button.addEventListener('mouseout', () => button.style.transform = 'scale(1)');
+        });
     </script>
 </body>
 </html>
