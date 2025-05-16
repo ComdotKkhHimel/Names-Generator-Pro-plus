@@ -208,8 +208,6 @@
                 padding: 1.5rem;
             }
 
--Regular Response (continued)-
-
             .card h2 {
                 font-size: 1.5rem;
             }
@@ -240,13 +238,13 @@
     <!-- Header -->
     <header>
         <h1>Random Names Generator - KKH</h1>
-        <p></p>
+        <p>Com Dot KKH - Himel</p>
     </header>
 
     <!-- Main Content -->
     <main>
         <div class="card">
-            <h2>Generate a Full Name</h2>
+            <h2>Full Names Generator</h2>
             <div class="button-container">
                 <button class="male" onclick="showName('male')">Male Name</button>
                 <button class="female" onclick="showName('female')">Female Name</button>
@@ -262,14 +260,15 @@
 
     <!-- Footer -->
     <footer>
-        <p>Com Dot KKH - Himel</p>
+        <p>Com Dot KKH - Random Names Generator KKH.</p>
     </footer>
 
     <script>
         // Arrays to store names
         let maleFirstNames = [];
         let femaleFirstNames = [];
-        let lastNames = [];
+        let maleLastNames = [];
+        let femaleLastNames = [];
 
         // Function to fetch and parse text file
         async function loadNames(file) {
@@ -292,9 +291,11 @@
         async function initialize() {
             maleFirstNames = await loadNames('male_names.txt');
             femaleFirstNames = await loadNames('female_names.txt');
-            lastNames = await loadNames('last_names.txt');
+            maleLastNames = await loadNames('male_last_names.txt');
+            femaleLastNames = await loadNames('female_last_names.txt');
 
-            if (maleFirstNames.length === 0 || femaleFirstNames.length === 0 || lastNames.length === 0) {
+            if (maleFirstNames.length === 0 || femaleFirstNames.length === 0 || 
+                maleLastNames.length === 0 || femaleLastNames.length === 0) {
                 document.getElementById('error').innerText = 'One or more name files are empty or failed to load.';
             } else {
                 console.log('All files loaded successfully.');
@@ -304,6 +305,7 @@
         // Show a random full name
         function showName(gender) {
             const firstNames = gender === 'male' ? maleFirstNames : femaleFirstNames;
+            const lastNames = gender === 'male' ? maleLastNames : femaleLastNames;
             const resultDiv = document.getElementById('result');
             const copyButton = document.getElementById('copyButton');
             if (firstNames.length === 0 || lastNames.length === 0) {
@@ -325,7 +327,7 @@
             document.getElementById('error').innerText = '';
         }
 
-        // Copy name to clipboard
+        // Copy imię to clipboard
         function copyName() {
             const resultDiv = document.getElementById('result');
             const text = resultDiv.innerText;
