@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Name Generator</title>
+</head>
+<body style="margin: 0; font-family: 'Roboto', Arial, sans-serif; background-color: #f4f7fa; color: #333; line-height: 1.6;">
+    <!-- Header -->
+    <header style="background-color: #1a2a44; color: white; padding: 20px 0; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h1 style="margin: 0; font-size: 2.5em; font-weight: 700;">Random Name Generator</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 140px); padding: 20px;">
+        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 600px; width: 100%; text-align: center;">
+            <h2 style="font-size: 1.8em; margin: 0 0 20px; color: #1a2a44;">Generate a Name</h2>
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <button onclick="generateName('male')" style="padding: 12px 24px; font-size: 1.1em; font-weight: 500; border: none; border-radius: 8px; background-color: #007bff; color: white; cursor: pointer; transition: transform 0.2s, background-color 0.2s;">Male Name</button>
+                <button onclick="generateName('female')" style="padding: 12px 24px; font-size: 1.1em; font-weight: 500; border: none; border-radius: 8px; background-color: #ff6f61; color: white; cursor: pointer; transition: transform 0.2s, background-color 0.2s;">Female Name</button>
+            </div>
+            <div id="result" style="margin-top: 25px; font-size: 1.6em; font-weight: 600; color: #1a2a44; min-height: 40px; transition: opacity 0.3s;">Click a button to generate a name!</div>
+            <div id="error" style="color: #d32f2f; font-size: 0.9em; margin-top: 10px; min-height: 20px;"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: #1a2a44; color: white; text-align: center; padding: 15px 0; font-size: 0.9em;">
+        <p style="margin: 0;">Com Dot KKH - Himel</p>
+    </footer>
+
+    <script>
+        // Arrays to store names
+        let maleFirstNames = [];
+        let femaleFirstNames = [];
+        let lastNames = [];
+
+        // Function to fetch and parse text file
+        async function loadNames(file) {
+            try {
+                const response = await fetch(file);
+                if (!response.ok) throw new Error(`Failed to load ${file}`);
+                const text = await response.text();
+                return text.split('\n').map(name => name.trim()).filter(name => name);
+            } catch (error) {
+                document.getElementById('error').innerText = `Error: ${error.message}`;
+                return [];
+            }
+        }
+
+        // Load all name files on page load
+        async function initialize() {
+            maleFirstNames = await loadNames('male_names.txt');
+            femaleFirstNames = await loadNames('female_names.txt');
+            lastNames = await loadNames('last_names.txt');
+
+            if (maleFirstNames.length === 0 || femaleFirstNames.length === 0 || lastNames.length === 0) {
+                document.getElementById('error').innerText = 'One or more name files are empty or failed to load.';
+            }
+        }
+
+        // Generate random name
+        function generateName(gender) {
+            const firstNames = gender === 'male' ? maleFirstNames : femaleFirstNames;
+            const resultDiv = document.getElementById('result');
+            if (firstNames.length === 0 || lastNames.length === 0) {
+                resultDiv.innerText = 'No names available.';
+                return;
+            }
+            const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            resultDiv.style.opacity = 0;
+            setTimeout(() => {
+                resultDiv.innerText = `${randomFirstName} ${randomLastName}`;
+                resultDiv.style.opacity = 1;
+            }, 300);
+            document.getElementById('error').innerText = '';
+        }
+
+        // Initialize name loading
+        initialize();
+
+        // Add hover effects for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mouseover', () => button.style.transform = 'scale(1.05)');
+            button.addEventListener('mouseout', () => button.style.transform = 'scale(1)');
+        });
+    </script>
+</body>
+</html>
