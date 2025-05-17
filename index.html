@@ -3,206 +3,565 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Name Generator -KKH</title>
+    <title>EliteName | Professional Name Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --dark-color: #2c3e50;
-            --light-color: #ecf0f1;
-            --danger-color: #e74c3c;
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #f72585;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: #f5f5f5;
-            color: var(--dark-color);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7ff;
+            min-height: 100vh;
         }
-        
+
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 20px;
         }
-        
+
+        /* Header */
         header {
+            background: white;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Main Content */
+        .hero {
             text-align: center;
-            margin-bottom: 2rem;
+            padding: 4rem 0 2rem;
         }
-        
-        h1 {
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
-        .subtitle {
-            color: #7f8c8d;
-            font-weight: 300;
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
         }
-        
-        .generator-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
+
+        /* Generator Card */
+        .generator-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            margin: 0 auto 3rem;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
         }
-        
+
+        .generator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
         .name-display {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             text-align: center;
             margin: 2rem 0;
-            min-height: 80px;
+            min-height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--dark-color);
+            color: var(--dark);
+            font-weight: 600;
+            position: relative;
         }
-        
+
+        .name-display::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        /* Buttons */
         .button-group {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
-        
+
         .btn {
-            padding: 0.8rem 1.5rem;
+            padding: 0.9rem 2rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
             font-weight: 600;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        
-        .btn-copy {
-            background-color: var(--dark-color);
-            color: white;
-            display: flex;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
-        
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5177b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .btn-copy {
+            background-color: var(--dark);
+            color: white;
+        }
+
         .btn-copy.copied {
-            background-color: var(--secondary-color);
+            background-color: var(--success);
         }
-        
+
+        .btn-copy.copied::after {
+            content: 'Copied!';
+        }
+
+        /* Stats */
         .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 2rem;
-            padding: 1rem;
-            background-color: var(--light-color);
-            border-radius: 5px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
         }
-        
-        .stat-item {
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
             text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
         }
-        
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
         .stat-number {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
         }
-        
+
         .stat-label {
-            font-size: 0.8rem;
-            color: #7f8c8d;
+            font-size: 0.9rem;
+            color: var(--gray);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
-        footer {
+
+        /* Features */
+        .features {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .section-title {
             text-align: center;
-            margin-top: 2rem;
-            color: #7f8c8d;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #adb5bd;
             font-size: 0.9rem;
         }
-        
-        @media (max-width: 600px) {
-            .button-group {
-                flex-direction: column;
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
             }
             
             .name-display {
-                font-size: 1.8rem;
+                font-size: 2rem;
+                min-height: 100px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Professional Name Generator - KKH</h1>
-            <p class="subtitle">Com Dot KKH - Himel</p>
-        </header>
-        
-        <div class="generator-container">
-            <div class="name-display" id="nameDisplay">Click a button below to generate a name</div>
-            
-            <div class="button-group">
-                <button class="btn btn-primary" id="generateMale">Male Name</button>
-                <button class="btn btn-secondary" id="generateFemale">Female Name</button>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-signature logo-icon"></i>
+                    <span class="logo-text">EliteName</span>
+                </a>
+                <div>
+                    <a href="#features" class="btn btn-outline">Features</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="animate">Professional Name Generator</h1>
+                <p class="animate delay-1">Generate unique, professional names for your characters, businesses, or projects with our powerful name generation engine.</p>
+                
+                <div class="generator-card animate delay-2">
+                    <div class="name-display" id="nameDisplay">
+                        <span id="displayText">Click below to generate</span>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="generateMale">
+                            <i class="fas fa-mars"></i> Male Name
+                        </button>
+                        <button class="btn btn-secondary" id="generateFemale">
+                            <i class="fas fa-venus"></i> Female Name
+                        </button>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-copy" id="copyName">
+                            <i class="far fa-copy"></i> Copy Name
+                        </button>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="maleCount">0</div>
+                            <div class="stat-label">Male Names</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="femaleCount">0</div>
+                            <div class="stat-label">Female Names</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCount">0</div>
+                            <div class="stat-label">Total Generated</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Why Choose Our Name Generator</h2>
+                    <p>Professional tools for all your naming needs</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>Extensive Database</h3>
+                        <p>Thousands of names carefully curated from diverse sources for maximum variety.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Lightning Fast</h3>
+                        <p>Generate perfect names instantly with our optimized name generation engine.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Smart Analytics</h3>
+                        <p>Track your name generation history and statistics with our dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EliteName</h3>
+                    <p>Professional name generation tools for authors, developers, and creatives.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="button-group">
-                <button class="btn btn-copy" id="copyName">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                    </svg>
-                    Copy Name
-                </button>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="maleCount">0</div>
-                    <div class="stat-label">Male Names</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="femaleCount">0</div>
-                    <div class="stat-label">Female Names</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="totalCount">0</div>
-                    <div class="stat-label">Total Generated</div>
-                </div>
+            <div class="copyright">
+                <p>&copy; 2023 EliteName Generator. All rights reserved.</p>
             </div>
         </div>
-        
-        <footer>
-            <p></p>
-        </footer>
-    </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // DOM Elements
             const nameDisplay = document.getElementById('nameDisplay');
+            const displayText = document.getElementById('displayText');
             const generateMaleBtn = document.getElementById('generateMale');
             const generateFemaleBtn = document.getElementById('generateFemale');
             const copyNameBtn = document.getElementById('copyName');
@@ -210,109 +569,67 @@
             const femaleCountEl = document.getElementById('femaleCount');
             const totalCountEl = document.getElementById('totalCount');
             
-            // Stats
-            let maleCount = 0;
-            let femaleCount = 0;
-            let totalCount = 0;
-            
-            // Initialize stats
-            updateStats();
-            
-            // Generate Male Name
-            generateMaleBtn.addEventListener('click', async function() {
-                try {
-                    const response = await fetch('api.php?type=male');
-                    const data = await response.json();
-                    
-                    if (data.error) {
-                        nameDisplay.textContent = 'Error: ' + data.error;
-                        return;
-                    }
-                    
-                    nameDisplay.textContent = data.fullName;
-                    maleCount++;
-                    totalCount++;
-                    updateStats();
-                    logName(data.fullName, 'male');
-                } catch (error) {
-                    nameDisplay.textContent = 'Failed to fetch male name';
-                    console.error('Error:', error);
-                }
-            });
-            
-            // Generate Female Name
-            generateFemaleBtn.addEventListener('click', async function() {
-                try {
-                    const response = await fetch('api.php?type=female');
-                    const data = await response.json();
-                    
-                    if (data.error) {
-                        nameDisplay.textContent = 'Error: ' + data.error;
-                        return;
-                    }
-                    
-                    nameDisplay.textContent = data.fullName;
-                    femaleCount++;
-                    totalCount++;
-                    updateStats();
-                    logName(data.fullName, 'female');
-                } catch (error) {
-                    nameDisplay.textContent = 'Failed to fetch female name';
-                    console.error('Error:', error);
-                }
-            });
-            
-            // Copy Name
-            copyNameBtn.addEventListener('click', function() {
-                if (nameDisplay.textContent && !nameDisplay.textContent.includes('Click')) {
-                    navigator.clipboard.writeText(nameDisplay.textContent)
-                        .then(() => {
-                            copyNameBtn.classList.add('copied');
-                            copyNameBtn.innerHTML = `
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                                </svg>
-                                Copied!
-                            `;
-                            setTimeout(() => {
-                                copyNameBtn.classList.remove('copied');
-                                copyNameBtn.innerHTML = `
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                                    </svg>
-                                    Copy Name
-                                `;
-                            }, 2000);
-                        })
-                        .catch(err => {
-                            console.error('Failed to copy text: ', err);
-                        });
-                }
-            });
-            
-            // Update statistics display
-            function updateStats() {
-                maleCountEl.textContent = maleCount;
-                femaleCountEl.textContent = femaleCount;
-                totalCountEl.textContent = totalCount;
+            // Animation function
+            function animateNameChange(newName) {
+                nameDisplay.style.opacity = 0;
+                nameDisplay.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    displayText.textContent = newName;
+                    nameDisplay.style.opacity = 1;
+                    nameDisplay.style.transform = 'translateY(0)';
+                    nameDisplay.style.transition = 'all 0.3s ease';
+                }, 200);
             }
             
-            // Log generated name to database
-            async function logName(name, gender) {
+            // Load statistics from API
+            async function loadStatistics() {
                 try {
-                    await fetch('api.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `action=log&name=${encodeURIComponent(name)}&gender=${gender}`
-                    });
+                    const response = await fetch('api.php?action=get_stats');
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        maleCountEl.textContent = data.male || 0;
+                        femaleCountEl.textContent = data.female || 0;
+                        totalCountEl.textContent = data.total || 0;
+                        
+                        // Animate counter updates
+                        animateCounter(maleCountEl, data.male);
+                        animateCounter(femaleCountEl, data.female);
+                        animateCounter(totalCountEl, data.total);
+                    }
                 } catch (error) {
-                    console.error('Error logging name:', error);
+                    console.error('Error loading statistics:', error);
                 }
             }
-        });
-    </script>
-</body>
-</html>
+            
+            // Animate counter
+            function animateCounter(element, target) {
+                const current = parseInt(element.textContent);
+                const increment = target > current ? 1 : -1;
+                let currentValue = current;
+                
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    element.textContent = currentValue;
+                    
+                    if ((increment === 1 && currentValue >= target) || 
+                        (increment === -1 && currentValue <= target)) {
+                        clearInterval(timer);
+                        element.textContent = target;
+                    }
+                }, 20);
+            }
+            
+            // Generate name from API
+            async function generateName(type) {
+                try {
+                    generateMaleBtn.disabled = true;
+                    generateFemaleBtn.disabled = true;
+                    
+                    // Show loading state
+                    displayText.textContent = 'Generating...';
+                    
+                    const response = await fetch(`api.php?type=${type}`);
+                    const data = await response.json();
+                    
