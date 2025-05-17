@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Name Generator -KKH</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --danger-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+        
+        .generator-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .name-display {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-color);
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-copy {
+            background-color: var(--dark-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-copy.copied {
+            background-color: var(--secondary-color);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: var(--light-color);
+            border-radius: 5px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .name-display {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Professional Name Generator - KKH</h1>
+            <p class="subtitle">Com Dot KKH - Himel</p>
+        </header>
+        
+        <div class="generator-container">
+            <div class="name-display" id="nameDisplay">Click a button below to generate a name</div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" id="generateMale">Male Name</button>
+                <button class="btn btn-secondary" id="generateFemale">Female Name</button>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-copy" id="copyName">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                    Copy Name
+                </button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="maleCount">0</div>
+                    <div class="stat-label">Male Names</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="femaleCount">0</div>
+                    <div class="stat-label">Female Names</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total Generated</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const nameDisplay = document.getElementById('nameDisplay');
+            const generateMaleBtn = document.getElementById('generateMale');
+            const generateFemaleBtn = document.getElementById('generateFemale');
+            const copyNameBtn = document.getElementById('copyName');
+            const maleCountEl = document.getElementById('maleCount');
+            const femaleCountEl = document.getElementById('femaleCount');
+            const totalCountEl = document.getElementById('totalCount');
+            
+            // Stats
+            let maleCount = 0;
+            let femaleCount = 0;
+            let totalCount = 0;
+            
+            // Initialize stats
+            updateStats();
+            
+            // Generate Male Name
+            generateMaleBtn.addEventListener('click', async function() {
+                try {
+                    const response = await fetch('api.php?type=male');
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        nameDisplay.textContent = 'Error: ' + data.error;
+                        return;
+                    }
+                    
+                    nameDisplay.textContent = data.fullName;
+                    maleCount++;
+                    totalCount++;
+                    updateStats();
+                    logName(data.fullName, 'male');
+                } catch (error) {
+                    nameDisplay.textContent = 'Failed to fetch male name';
+                    console.error('Error:', error);
+                }
+            });
+            
+            // Generate Female Name
+            generateFemaleBtn.addEventListener('click', async function() {
+                try {
+                    const response = await fetch('api.php?type=female');
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        nameDisplay.textContent = 'Error: ' + data.error;
+                        return;
+                    }
+                    
+                    nameDisplay.textContent = data.fullName;
+                    femaleCount++;
+                    totalCount++;
+                    updateStats();
+                    logName(data.fullName, 'female');
+                } catch (error) {
+                    nameDisplay.textContent = 'Failed to fetch female name';
+                    console.error('Error:', error);
+                }
+            });
+            
+            // Copy Name
+            copyNameBtn.addEventListener('click', function() {
+                if (nameDisplay.textContent && !nameDisplay.textContent.includes('Click')) {
+                    navigator.clipboard.writeText(nameDisplay.textContent)
+                        .then(() => {
+                            copyNameBtn.classList.add('copied');
+                            copyNameBtn.innerHTML = `
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                                </svg>
+                                Copied!
+                            `;
+                            setTimeout(() => {
+                                copyNameBtn.classList.remove('copied');
+                                copyNameBtn.innerHTML = `
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                                    </svg>
+                                    Copy Name
+                                `;
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy text: ', err);
+                        });
+                }
+            });
+            
+            // Update statistics display
+            function updateStats() {
+                maleCountEl.textContent = maleCount;
+                femaleCountEl.textContent = femaleCount;
+                totalCountEl.textContent = totalCount;
+            }
+            
+            // Log generated name to database
+            async function logName(name, gender) {
+                try {
+                    await fetch('api.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=log&name=${encodeURIComponent(name)}&gender=${gender}`
+                    });
+                } catch (error) {
+                    console.error('Error logging name:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
